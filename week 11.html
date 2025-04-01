@@ -3378,7 +3378,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="lmg">LMG</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(agekdbrn <span class="sc">~</span> highschool,</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> fbab,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> fba,</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">gaussian</span>(<span class="at">link =</span> <span class="st">&quot;identity&quot;</span>))</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(Glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3397,7 +3397,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="logg">LogG</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Glog <span class="ot">&lt;-</span> <span class="fu">glm</span>(agekdbrn <span class="sc">~</span> highschool,</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> fbab,</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> fba,</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">gaussian</span>(<span class="at">link =</span> <span class="st">&quot;log&quot;</span>))</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(Glog)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3429,7 +3429,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="lmp">LMP</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Plm <span class="ot">&lt;-</span> <span class="fu">glm</span>(agekdbrn <span class="sc">~</span> highschool,</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> fbab,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> fba,</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">&quot;identity&quot;</span>))</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(Plm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3448,7 +3448,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="logp">LogP</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Plog <span class="ot">&lt;-</span> <span class="fu">glm</span>(agekdbrn <span class="sc">~</span> highschool,</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> fbab,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> fba,</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">&quot;log&quot;</span>))</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(Plog)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3471,6 +3471,75 @@ window.Quarto = {
 </div>
 <p>The average first birth age for people without high school degree is 21.1. The expected age at first birth is about 18% higher for people with a high school education(21.1*1.18=24.9) compared to those without.</p>
 <p>95% confidence Interval is (0.136,0.194), 95% chances that the expected age at first birth is 14% to 19% higher for people with high school education compared to those without.</p>
+</section>
+</section>
+<section id="loglike" class="level2">
+<h2 class="anchored" data-anchor-id="loglike">Loglike</h2>
+<section id="binary-identity" class="level3">
+<h3 class="anchored" data-anchor-id="binary-identity">Binary identity</h3>
+<p>lpm &lt;- glm(latebirth ~ highschool, data = fbab, family = binomial(link = “identity”))</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> fbab <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">predprob =</span> <span class="fu">predict</span>(lpm, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">l =</span> <span class="fu">dbinom</span>(latebirth, <span class="dv">1</span>, predprob),</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">ll =</span> <span class="fu">log</span>(l))</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(d1<span class="sc">$</span>ll)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -955.3419</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(lpm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&#39;log Lik.&#39; -955.3419 (df=2)</code></pre>
+</div>
+</div>
+<p>Manually calculate and function is -955.34</p>
+</section>
+<section id="linear-identity" class="level3">
+<h3 class="anchored" data-anchor-id="linear-identity">Linear identity</h3>
+<p>Glm &lt;- glm(agekdbrn ~ highschool, data = fba, family = gaussian(link = “identity”))</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> fba <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">mean =</span> <span class="fu">predict</span>(Glm),</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sd =</span> <span class="fu">sd</span>(Glm<span class="sc">$</span>residuals),</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">l2 =</span> <span class="fu">dnorm</span>(agekdbrn,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">mean =</span> mean,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">sd =</span> sd),</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ll2 =</span> <span class="fu">dnorm</span>(agekdbrn,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">mean =</span> mean,</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">sd =</span> sd,</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">log =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(d2<span class="sc">$</span>ll2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -5224.44</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(Glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&#39;log Lik.&#39; -5224.44 (df=3)</code></pre>
+</div>
+</div>
+<p>Manually calculate and function is -5224.44</p>
+</section>
+<section id="count-log" class="level3">
+<h3 class="anchored" data-anchor-id="count-log">Count Log</h3>
+<p>Plog &lt;- glm(agekdbrn ~ highschool, data = fba, family = poisson(link = “log”))</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>d3 <span class="ot">&lt;-</span>  fba <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">lambda =</span> <span class="fu">predict</span>(Plog, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>),</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sd =</span> <span class="fu">sd</span>(Plog<span class="sc">$</span>residuals),</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">l3 =</span> <span class="fu">dpois</span>(agekdbrn,</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lambda =</span> lambda),</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ll3 =</span> <span class="fu">dpois</span>(agekdbrn,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>                                <span class="at">lambda =</span> lambda,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">log =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(d3<span class="sc">$</span>ll3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -5189.72</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(Plog)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&#39;log Lik.&#39; -5189.72 (df=2)</code></pre>
+</div>
+</div>
+<p>Manually calculate and function is -5189.72</p>
+<p>Overall, Binary Identity has the largest result (closest to 0), thus it has better predictor of the correlation of having high school degree and late birth.</p>
 </section>
 </section>
 

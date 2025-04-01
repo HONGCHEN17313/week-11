@@ -70,7 +70,7 @@ logmodel <- glm(latebirth ~ highschool,
 broom::tidy(logmodel)
 ```
 
-log(P(latebirth=1)) = -2.242 + 1.053 \*highschool
+log(P(latebirth=1)) = -2.242 + 1.053 *highschool
 
 ```{r}
 exp(1.0532)
@@ -86,6 +86,8 @@ exp(1.425)
 ```
 
 95% chances are that People with high school degree are 1.98 to 4.16 times more likely to have late birth age.
+
+
 
 ### Logit
 
@@ -128,12 +130,12 @@ First birth age = 20.8 + 3.86 \* highschool
 
 ```{r}
 Glm <- glm(agekdbrn ~ highschool,
-           data = fbab,
+           data = fba,
            family = gaussian(link = "identity"))
 broom::tidy(Glm)
 ```
 
-Firstbirthage = 21.1 + 3.78 \* highschool
+Firstbirthage = 21.1 + 3.78 * highschool
 
 For Having high school degree is 3.78 years older for the first birth age compared to those not having high school degree.
 
@@ -143,7 +145,7 @@ For Having high school degree is 3.78 years older for the first birth age compar
 
 ```{r}
 Glog <- glm(agekdbrn ~ highschool,
-           data = fbab,
+           data = fba,
            family = gaussian(link = "log"))
 broom::tidy(Glog)
 ```
@@ -163,7 +165,7 @@ The average first birth age for people without high school degree is 21.1. The e
 ### LMP
 ```{r}
 Plm <- glm(agekdbrn ~ highschool,
-           data = fbab,
+           data = fba,
            family = poisson(link = "identity"))
 broom::tidy(Plm)
 ```
@@ -177,7 +179,7 @@ For Having high school degree is 3.78 years older for the first birth age compar
 ### LogP
 ```{r}
 Plog <- glm(agekdbrn ~ highschool,
-           data = fbab,
+           data = fba,
            family = poisson(link = "log"))
 broom::tidy(Plog)
 ```
@@ -190,3 +192,61 @@ exp(3.05)
 The average first birth age for people without high school degree is 21.1. The expected age at first birth is about 18% higher for people with a high school education(21.1*1.18=24.9) compared to those without.
 
 95% confidence Interval is (`r round(0.165-1.96*0.0149,3)`,`r round (0.165+1.96*0.0149,3)`), 95% chances that the expected age at first birth is 14% to 19% higher for people with high school education compared to those without.
+
+
+
+## Loglike
+
+### Binary identity
+lpm <- glm(latebirth ~ highschool,
+           data = fbab,
+           family = binomial(link = "identity"))
+
+```{r}
+d1 <- fbab |>
+     mutate(predprob = predict(lpm, type = "response"),
+            l = dbinom(latebirth, 1, predprob),
+            ll = log(l))
+sum(d1$ll)
+logLik(lpm)
+```
+Manually calculate and function is -955.34
+
+### Linear identity
+Glm <- glm(agekdbrn ~ highschool,
+           data = fba,
+           family = gaussian(link = "identity"))
+
+```{r}
+d2 <- fba |> mutate(mean = predict(Glm),
+                    sd = sd(Glm$residuals),
+                    l2 = dnorm(agekdbrn,
+                               mean = mean,
+                               sd = sd),
+                    ll2 = dnorm(agekdbrn,
+                                mean = mean,
+                                sd = sd,
+                                log = TRUE))
+sum(d2$ll2)
+logLik(Glm)
+```
+Manually calculate and function is -5224.44                 
+
+### Count Log
+Plog <- glm(agekdbrn ~ highschool,
+           data = fba,
+           family = poisson(link = "log"))
+```{r}
+d3 <-  fba |> mutate(lambda = predict(Plog, type = "response"),
+                    sd = sd(Plog$residuals),
+                    l3 = dpois(agekdbrn,
+                               lambda = lambda),
+                    ll3 = dpois(agekdbrn,
+                                lambda = lambda,
+                                log = TRUE))
+sum(d3$ll3)
+logLik(Plog)
+```
+Manually calculate and function is -5189.72
+
+Overall, Binary Identity has the largest result (closest to 0), thus it has better predictor of the correlation of having high school degree and late birth.
