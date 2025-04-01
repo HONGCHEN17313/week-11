@@ -1,0 +1,192 @@
+---
+title: "week 11"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+## Homework
+
+Estimate and interpret the coefficients of 7 models with a single two-group predictor. Use the following: 
+
+-three binary models (one LPM, one log, one logit) 
+
+-two “linear regressions” (Gaussian GLMs) 
+
+-two count models
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+#| cashe: false
+
+library(gssr)
+library(tidyverse)
+library(tidyr)
+```
+
+## Variables
+
+The predictor is one's education level, the outcome is one's first birth age.
+
+```{r}
+gss2018 <- gss_get_yr(2018)
+fba <- gss2018 |>
+  select(educ,agekdbrn) |>
+  mutate(highschool = ifelse(educ >=12, 1, 0)) |>
+  drop_na()
+```
+
+## Binary Models
+
+First, we create binary outcomes.
+
+```{r}
+fbab <- fba |>
+  mutate(latebirth = ifelse(agekdbrn >= 28, 1, 0)) 
+```
+
+### LPM
+
+```{r}
+lpm <- glm(latebirth ~ highschool,
+           data = fbab,
+           family = binomial(link = "identity"))
+broom::tidy(lpm)
+```
+
+P(latebirth=1) = 0.106 + 0.198*highschool
+
+People with high school degree increase the probability of having late birth by 19.8 percentage points. 95% confidence interval is (0.153, 0.243) 95% chances that people with high school degree increase the probability of having late birth by 15.3 to 24.3 percentage points in real population.
+
+### Log
+
+```{r}
+logmodel <- glm(latebirth ~ highschool,
+           data = fbab,
+           family = binomial(link = "log"))
+broom::tidy(logmodel)
+```
+
+log(P(latebirth=1)) = -2.242 + 1.053 \*highschool
+
+```{r}
+exp(1.0532)
+```
+
+People with high school degree are 2.87 times more likely to have late birth age.
+
+95% confidence interval is (`r round(1.0532-1.96*0.1897,3)`,`r round(1.0532+1.96*0.1897,3)`).
+
+```{r}
+exp(0.681)
+exp(1.425)
+```
+
+95% chances are that People with high school degree are 1.98 to 4.16 times more likely to have late birth age.
+
+### Logit
+
+```{r}
+logitmodel <- glm(latebirth ~ highschool,
+           data = fbab,
+           family = binomial(link = "logit"))
+broom::tidy(logitmodel)
+```
+
+log($\frac{P(latebirth =1)}{(1-(P(latebirth = 1)}$) = -2.13 + 1.30\*highschool
+
+```{r}
+exp(1.30)
+```
+
+OR = 3.67. Having high school degree increases one's odds of having late birth age by 3.67 times.
+
+95% confidence interval is (`r round(1.30-1.96*0.215,3)`,`r round(1.30+1.96*0.215,3)`).
+
+```{r}
+exp(0.879)
+exp(1.721)
+```
+
+95 chances are that having high school degree increases one's odds of having late birth age by 2.41 to 5.59 times among true population.
+
+## Linear Regression
+
+Here we use first birth age rather than late birth.
+
+```{r}
+lmmodel <- lm(formula = agekdbrn ~ 1 + educ >=12, data = fba)
+broom :: tidy(lmmodel)
+```
+
+First birth age = 20.8 + 3.86 \* highschool
+
+### LMG
+
+```{r}
+Glm <- glm(agekdbrn ~ highschool,
+           data = fbab,
+           family = gaussian(link = "identity"))
+broom::tidy(Glm)
+```
+
+Firstbirthage = 21.1 + 3.78 \* highschool
+
+For Having high school degree is 3.78 years older for the first birth age compared to those not having high school degree.
+
+95% confidence interval is (`r round(3.78-1.96*0.386,3)`,`r round(3.78+1.96*0.386,3)`) 95% chances that having high school degree is 3.02 to 4.54 years older for the fitst birth age compared to those not having high school degree.
+
+### LogG
+
+```{r}
+Glog <- glm(agekdbrn ~ highschool,
+           data = fbab,
+           family = gaussian(link = "log"))
+broom::tidy(Glog)
+```
+
+log[P(agekdbrn)] = 3.05 + 0.165 * highschool
+
+```{r}
+exp(0.165)
+exp(3.05)
+```
+
+The average first birth age for people without high school degree is 21.1. The expected age at first birth is about 18% higher for people with a high school education(21.1\*1.18=24.9) compared to those without.
+
+95% confidence Interval is (`r round(0.165-1.96*0.0179,3)`,`r round (0.165+1.96*0.0179,3)`), 95% chances that the expected age at first birth is 13% to 22% higher for people with high school education compared to those without.
+
+## Count Models
+### LMP
+```{r}
+Plm <- glm(agekdbrn ~ highschool,
+           data = fbab,
+           family = poisson(link = "identity"))
+broom::tidy(Plm)
+```
+
+Firstbirthage = 21.1 + 3.78 \* highschool
+
+For Having high school degree is 3.78 years older for the first birth age compared to those not having high school degree.
+
+95% confidence interval is (`r round(3.78-1.96*0.322,3)`,`r round(3.78+1.96*0.322,3)`) 95% chances that having high school degree is 3.15 to 4.41 years older for the first birth age compared to those not having high school degree.
+
+### LogP
+```{r}
+Plog <- glm(agekdbrn ~ highschool,
+           data = fbab,
+           family = poisson(link = "log"))
+broom::tidy(Plog)
+```
+
+```{r}
+exp(0.165)
+exp(3.05)
+```
+
+The average first birth age for people without high school degree is 21.1. The expected age at first birth is about 18% higher for people with a high school education(21.1*1.18=24.9) compared to those without.
+
+95% confidence Interval is (`r round(0.165-1.96*0.0149,3)`,`r round (0.165+1.96*0.0149,3)`), 95% chances that the expected age at first birth is 14% to 19% higher for people with high school education compared to those without.
